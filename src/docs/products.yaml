@@ -1,0 +1,193 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtiene todos los productos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los productos fueron obtenidos satisfactoriamente de la base de datos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Products"
+        "500":
+          description: Error interno de servidor
+    post:
+      summary: Agregar producto a la base de datos
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/addProduct"
+
+  /api/products/{pid}:
+    get:
+      summary: Obtiene productos por su ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          description: ID del producto a obtener
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: El Producto fue obtenido satisfactoriamente
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Products"
+        "404":
+          description: Producto no encontrado en la base de datos
+        "500":
+          description: Error interno del servidor
+    put:
+      summary: Actualiza un producto por ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          description: ID del producto a actualizar
+          required: true
+          schema:
+            $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/updateProduct"
+    delete:
+      summary: Borrar un producto por ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          description: ID del producto a borrar
+          required: true
+          schema: 
+            $type: string
+      responses:
+        "200":
+          description: El producto fue borrado satisfactoriamente
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Products"
+        "404":
+          description: Producto no encontrado
+        "500":
+          description: Error interno del servidor
+
+components:
+  schemas:
+    Products:
+      type: object
+      properties:
+        title:
+          type: String
+          required: true
+          description: Nombre de objeto
+        description:
+          type: String
+          required: true
+          description: descripcion de objeto
+        code:
+          type: String
+          required: true
+          unique: true
+          description: codigo unico de producto
+        price:
+          type: Number
+          required: true
+          description: precio del producto
+        status:
+          type: Boolean
+          description: indica si esta disponible o no
+        stock:
+          type: Number
+          required: true
+          description: cantidad del producto
+        category:
+          type: String
+          required: true
+          description: categoria a la que el producto pertenece
+        url:
+          type: String
+        owner:
+          type: String
+          description: Persona que agregó el producto
+      example:
+        title: Prueba Swagger 1
+        description: ejemplo de body para Swagger
+        code: swag1234
+        price: 1000
+        stock: 1
+        category: programacion
+  requestBodies:
+    addProduct:
+      type: object
+      properties:
+        title:
+          type: String
+          description: Nombre del producto
+        description:
+          type: String
+          description: Descripcion de producto
+        code:
+          type: String
+          description: Codigo de identificacion de producto
+        price:
+          type: Number
+          description: Valor del producto
+        stock:
+          type: String
+          description: cantidad disponible del producto
+        category:
+          type: String
+          description: categoria perteneciente al producto
+      example:
+        title: Prueba Swagger 1
+        description: ejemplo de body para Swagger
+        code: swag1234
+        price: 1000
+        stock: 1
+        category: programacion
+    updateProduct: 
+      type: object
+      properties:
+        title:
+          type: String
+          description: Nombre del producto
+        description:
+          type: String
+          description: Descripcion de producto
+        code:
+          type: String
+          description: Codigo de identificacion de producto
+        price:
+          type: Number
+          description: Valor del producto
+        stock:
+          type: String
+          description: cantidad disponible del producto
+        category:
+          type: String
+          description: categoria perteneciente al producto
+      example:
+        title: Prueba Swagger 1
+        description: ejemplo de body para Swagger
+        code: swag1234
+        price: 1000
+        stock: 1
+        category: programacion

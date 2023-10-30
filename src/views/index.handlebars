@@ -1,0 +1,19 @@
+<div>
+    <h1>Bienvenido!</h1>
+    <p>{{user.name}}</p>
+        <p>{{user.email}}</p>
+        <p>Rol {{user.role}}</p>
+        <a href="/api/sessions/logout"><button>Salir</button></a>
+
+    <h2>Lista de Productos</h2>
+    <div>
+        {{#each products}}
+        <img src={{this.url}} alt="Imagen">
+        <h2>{{this.title}}</h2>
+        <p>{{this.description}}</p>
+        <p>${{this.price}}</p>
+        <p>Stock: {{this.stock}}</p>
+        <p>Categoria: {{this.category}}</p>
+        {{/each}}
+    </div>
+</div>

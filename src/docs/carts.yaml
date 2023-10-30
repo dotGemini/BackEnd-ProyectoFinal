@@ -1,0 +1,166 @@
+paths:
+  /api/carts:
+    post:
+      tags:
+        - Carts
+      security:
+        - cookieAuth: []
+      summary: Create Cart
+      description: Crea nuevo carrito
+      responses:
+        "200":
+          description: Carrito creado satisfactoriamente
+          content:
+            application/json:
+              schema: 
+                type: object
+                items:
+                  $ref: "#components/schemas/Carts"
+        "500":
+          description: Error interno del servidor
+  /api/carts/{cid}:
+    get:
+      summary: Obtiene el carro solicitado
+      tags:
+        - Carts
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: cid
+          in: path
+          description: ID del carrito a obtener
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Visualizando los productos dentro del carrito solicitado
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Carts"
+        "404":
+          description: Carro no encontrado
+        "500":
+          description: Error interno del servidor
+    put:
+      summary: Agrega productos al carrito indicado
+      tags:
+        - Carts
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: cid
+          in: path
+          description: agrega productos al carro
+          required: true
+          schema:
+            $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/addProductToCart"
+    delete:
+      summary: Borrar Carrito
+      tags:
+      - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: id del carro a vaciar
+          required: true
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: Carrito vaciado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Carts"
+        "404":
+          description: Carrito no encontrado
+        "500":
+          description: Error interno del servidor
+  /api/carts/{cid}/products/{pid}:
+    post:
+      tags:
+        - Carts
+      security:
+        - cookieAuth: []
+      summary: Agrega un producto al carrito indicado
+      parameters:
+        - name: cid
+          in: path
+          description: ID del carrito seleccionado
+          required: true
+          schema:
+            $type: string
+        
+        - name: pid
+          in: path
+          description: ID del producto a agregar
+          required: true
+          schema:
+            $type: string
+    put:
+      tags:
+        - Carts
+      security:
+        - cookieAuth: []
+      summary: Actualiza un producto que ya este en el carrito
+      parameters:
+        - name: cid
+          in: path
+          description: ID del carrito seleccionado
+          required: true
+          schema:
+            $type: string
+        
+        - name: pid
+          in: path
+          description: ID del producto a agregar
+          required: true
+          schema:
+            $type: string
+    delete:
+      tags:
+        - Carts
+      security:
+        - cookieAuth: []
+      summary: Eliminar producto del carrito
+      parameters:
+        - name: cid
+          in: path
+          description: ID del carrito seleccionado
+          required: true
+          schema:
+            $type: string
+        
+        - name: pid
+          in: path
+          description: ID del producto a agregar
+          required: true
+          schema:
+            $type: string
+
+components:
+  schemas:
+    Carts:
+      type: object
+      properties:
+        _id:
+          type: String
+          description: ID autogenerado por DB
+          example: asd123qwerty456
+        products:
+          productId:
+            type: ObjectId
+            $ref: '#/components/schemas/Product'
+          quantity:
+            type: Number
+            example: 50
+
+

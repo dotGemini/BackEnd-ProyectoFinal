@@ -1,0 +1,42 @@
+<div>
+    <h1>Bienvenido!</h1>
+    <p>{{user.name}}</p>
+    <p>{{user.email}}</p>
+    <p>Rol {{user.role}}</p>
+    <p>CartId {{cartId}}</p>
+    <a href="/api/sessions/logout"><button>Salir</button></a>    
+
+    <h2>Productos</h2>
+  
+    <div>
+        {{#each allProds}}
+            <div class="product">
+                <h2>{{this.title}}</h2>
+                <p>{{this.category}}</p>
+                <p>{{this.stock}}</p>
+                <p>Precio: {{this.price}}</p>
+                <p>Product Id: {{this._id}}</p>
+                <button class="addToCart" data-product-id={{this._id}} data-cart-id={{../cartId}}>Agregar al carrito</button>
+            </div>
+        {{/each}}
+    </div>
+    
+   <div>
+        {{#if products.hasPrevPage}}
+            <a href={{products.prevLink}}>Previous Page</a>
+        {{/if}}
+        <span>
+            Page {{products.page}} of {{products.totalPages}}
+        </span>
+        {{#if products.hasNextPage}}
+            <a href={{products.nextLink}}>Next Page</a>
+        {{/if}}
+    </div>
+
+    <button class="ticket" data-cart-id={{cartId}}>Finalizar Compra</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/logout.js"></script>
+<script src="js/addProductToCart.js"></script>
+<script src="js/finalizarCompra.js"></script>
